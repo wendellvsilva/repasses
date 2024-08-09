@@ -51,6 +51,7 @@ A aplicação está protegida por Spring Security. As rotas são configuradas pa
 - **Public Routes**: Algumas rotas podem ser acessadas sem autenticação.
 - **Protected Routes**: Outras rotas exigem autenticação e autorização. As permissões são configuradas com base em roles e outras regras de segurança definidas.
 
-A configuração exata pode ser encontrada na classe `SecurityConfig` em `src/main/java/com/example/projeto/config/SecurityConfig.java`.
+A configuração exata pode ser encontrada na classe `SecurityConfig` em <br>
+`src/main/java/com/example/projeto/config/SecurityConfig.java`.
 
 }
