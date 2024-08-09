@@ -13,7 +13,7 @@ public class AdminController {
         return "Dashboard do administrador. Somente ADMIN pode ver isso.";
     }
 
-    @GetMapping("/management")
+    @GetMapping("/ferramentas")
     public String adminManagement() {
         return "Ferramentas de gestão disponíveis apenas para ADMIN.";
     }

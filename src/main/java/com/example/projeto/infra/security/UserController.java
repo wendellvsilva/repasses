@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/user")
 public class UserController {
 
-    @GetMapping("/profile")
+    @GetMapping("/perfil")
     public String userProfile() {
         return "Perfil do usuário comum. Você está autenticado como USER.";
     }
