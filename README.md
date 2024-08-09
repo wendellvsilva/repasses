@@ -29,6 +29,8 @@ mvn spring-boot:run
 ## Acessar o Console H2
 Para visualizar o banco de dados H2:
 - Abra um navegador e acesse a URL:` http://localhost:8080/h2-console `
+- Insira o username: `wendell`
+- Insira a senha: `fera`
 - **Configure os parâmetros de conexão:**
 - JDBC URL: jdbc:h2:mem:testdb
 - Username: `sa`
