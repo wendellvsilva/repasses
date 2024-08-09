@@ -9,7 +9,31 @@
 - **Lombok**: Biblioteca para reduzir o boilerplate de código.
 - **JaCoCo**: Ferramenta para análise de cobertura de testes.
 
-## Como Acessar o Swagger
+
+## Pré-requisitos 
+**Certifique-se de ter os seguintes itens instalados:**
+- Java 17
+- Maven
+
+## Configuração do Banco de Dados H2
+
+O H2 está pré-configurado para desenvolvimento e testes. A configuração padrão usa o perfil test e o banco de dados é inicializado em memória. Para ajustar ou verificar a configuração, edite o arquivo src/main/resources/application.properties:
+
+## Iniciar a aplicação 
+Para iniciar a aplicação, execute os seguintes comandos Maven:
+```sh
+mvn clean install
+mvn spring-boot:run
+```
+
+## Acessar o Console H2
+Para visualizar o banco de dados H2:
+- Abra um navegador e acesse a URL:` http://localhost:8080/h2-console `
+- **Configure os parâmetros de conexão:**
+- JDBC URL: jdbc:h2:mem:testdb
+- Username: `sa`
+- Password: `password`
+- ## Como Acessar o Swagger
 
 O Swagger é integrado ao projeto para fornecer uma interface de documentação interativa para a API. Para acessá-lo:
 
@@ -29,91 +53,4 @@ A aplicação está protegida por Spring Security. As rotas são configuradas pa
 
 A configuração exata pode ser encontrada na classe `SecurityConfig` em `src/main/java/com/example/projeto/config/SecurityConfig.java`.
 
-## Como Rodar o Código
-
-Para rodar a aplicação localmente:
-
-1. Certifique-se de que você tem o Java 17 instalado.
-2. Navegue até o diretório raiz do projeto.
-3. Execute o comando Maven para construir e iniciar a aplicação:
-
-   ```sh
-   mvn clean install
-   mvn spring-boot:run
-Utilização de Paginação e Filtragem
-Endpoints Disponíveis
-Listar Repasses com Paginação e Ordenação
-
-    URL: GET /api/repasses
-    Parâmetros de Consulta:
-        page: Número da página (baseado em zero, por exemplo, 0 para a primeira página).
-        size: Número de itens por página (por exemplo, 10).
-        sort: Campo e direção de ordenação no formato campo,direcao (por exemplo, dataVencimento,asc).
-
-Exemplo de Requisição:
-
-http
-
-GET http://localhost:8080/api/repasses?page=0&size=10&sort=dataVencimento,asc
-
-Filtrar Repasses
-
-    URL: GET /api/repasses/filtrar
-    Parâmetros de Consulta:
-        tipoRepasse: Tipo de repasse (por exemplo, SELLER).
-        sistemaOrigem: Sistema de origem (por exemplo, ECOM).
-        page: Número da página.
-        size: Número de itens por página.
-        sort: Campo e direção de ordenação.
-
-Exemplo de Requisição com Filtro e Paginação:
-
-http
-
-GET http://localhost:8080/api/repasses/filtrar?tipoRepasse=SELLER&sistemaOrigem=ECOM&page=0&size=5&sort=dataVencimento,asc
-
-Exemplo de Resposta
-
-A resposta incluirá informações de paginação e os repasses correspondentes:
-
-json
-
-{
-"totalPages": 1,
-"totalElements": 1,
-"size": 10,
-"content": [
-{
-"id": 1,
-"tipoRepasse": "SELLER",
-"valorRepasse": 1000.00,
-"dataVencimento": "2024-09-01T00:00:00",
-"formaPagamento": "TRANSFERENCIA_BANCARIA",
-"sistemaOrigem": "ECOM",
-"dataCriacao": "2024-08-09T02:47:17.45645",
-"dataAtualizacao": null
-}
-],
-"number": 0,
-"sort": {
-"empty": false,
-"sorted": true,
-"unsorted": false
-},
-"pageable": {
-"pageNumber": 0,
-"pageSize": 10,
-"sort": {
-"empty": false,
-"sorted": true,
-"unsorted": false
-},
-"offset": 0,
-"paged": true,
-"unpaged": false
-},
-"first": true,
-"last": true,
-"numberOfElements": 1,
-"empty": false
 }
