@@ -1,5 +1,6 @@
 package com.example.projeto.infra.security;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,6 +18,8 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private final Dotenv dotenv = Dotenv.load();
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -28,9 +31,7 @@ public class SecurityConfig {
                 )
                 .formLogin(withDefaults())
                 .httpBasic(withDefaults())
-                .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/h2-console/**")
-                )
+                .csrf(csrf -> csrf.disable())
                 .headers(headers -> headers
                         .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
                 );
@@ -39,15 +40,18 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
+        String senhaUsuario = dotenv.get("USER_PASSWORD");
+        String senhaAdmin = dotenv.get("ADMIN_PASSWORD");//as senhas podem ser encontradas no arquivo .env
+
         UserDetails user = User.withDefaultPasswordEncoder()
                 .username("usuario")
-                .password("senha")
+                .password(senhaUsuario)
                 .roles("USER")
                 .build();
 
         UserDetails admin = User.withDefaultPasswordEncoder()
                 .username("wendell")
-                .password("fera")
+                .password(senhaAdmin)
                 .roles("ADMIN")
                 .build();
 
