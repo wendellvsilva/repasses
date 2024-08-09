@@ -1,6 +1,5 @@
 package com.example.projeto.model;
 
-import com.example.projeto.dto.RepasseDTO;
 import com.example.projeto.model.enums.FormaPagamento;
 import com.example.projeto.model.enums.SistemaOrigem;
 import com.example.projeto.model.enums.TipoRepasse;
@@ -48,16 +47,5 @@ public class Repasse {
     @PreUpdate
     protected void onUpdate() {
         this.dataAtualizacao = LocalDateTime.now();
-    }
-
-    public static Repasse fromDTO(RepasseDTO dto) {
-        return Repasse.builder()
-                .tipoRepasse(dto.tipoRepasse())
-                .valorRepasse(dto.valorRepasse())
-                .dataVencimento(dto.dataVencimento())
-                .formaPagamento(dto.formaPagamento())
-                .sistemaOrigem(dto.sistemaOrigem())
-                .dataCriacao(LocalDateTime.now())
-                .build();
     }
 }

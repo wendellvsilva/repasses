@@ -2,7 +2,6 @@ package com.example.projeto.controller;
 
 import com.example.projeto.dto.RepasseDTO;
 import com.example.projeto.model.Repasse;
-import com.example.projeto.model.enums.SistemaOrigem;
 import com.example.projeto.model.enums.TipoRepasse;
 import com.example.projeto.service.RepasseService;
 import lombok.RequiredArgsConstructor;
@@ -35,15 +34,13 @@ public class RepasseController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortDir,
-            @RequestParam(required = false) Long id,
-            @RequestParam(required = false) TipoRepasse tipoRepasse,
-            @RequestParam(required = false) SistemaOrigem sistemaOrigem) {
+            @RequestParam(defaultValue = "asc") String sortDir) {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(sortDir), sortBy));
-        Page<Repasse> repasses = repasseService.listarRepasses(id, tipoRepasse, sistemaOrigem, pageable);
+        Page<Repasse> repasses = repasseService.listarRepasses(pageable);
         return ResponseEntity.ok(repasses);
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<Repasse> obterRepassePorId(@PathVariable Long id) {
         Repasse repasse = repasseService.obterRepassePorId(id);
@@ -67,6 +64,4 @@ public class RepasseController {
         repasseService.removerRepasse(id);
         return ResponseEntity.noContent().build();
     }
-
-
 }

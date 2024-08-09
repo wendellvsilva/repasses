@@ -71,7 +71,7 @@ class RepasseControllerTest {
 
         mockMvc.perform(get("/api/repasses"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].valorRepasse").value(1000.00));
+                .andExpect(jsonPath("$.content[0].valorRepasse").value(1000.00));
     }
 
     @Test

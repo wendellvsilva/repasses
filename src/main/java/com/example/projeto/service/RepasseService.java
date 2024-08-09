@@ -1,20 +1,14 @@
 package com.example.projeto.service;
 
-import com.example.projeto.domain.RepasseSpecifications;
-import org.springframework.data.jpa.domain.Specification;
+import com.example.projeto.mappers.RepasseMapper;
+import com.example.projeto.model.enums.TipoRepasse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.example.projeto.dto.RepasseDTO;
 import com.example.projeto.exception.RepasseNotFoundException;
 import com.example.projeto.model.Repasse;
-import com.example.projeto.model.enums.SistemaOrigem;
-import com.example.projeto.model.enums.TipoRepasse;
 import com.example.projeto.repository.RepasseRepository;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,28 +20,16 @@ import java.util.List;
 public class RepasseService {
 
     private final RepasseRepository repasseRepository;
+    private final RepasseMapper repasseMapper;
 
     public Repasse salvarRepasse(RepasseDTO repasseDTO) {
-        Repasse repasse = Repasse.fromDTO(repasseDTO);
+        Repasse repasse = repasseMapper.fromDTO(repasseDTO);
         return repasseRepository.save(repasse);
     }
 
-    public Page<Repasse> listarRepasses(Long id, TipoRepasse tipoRepasse, SistemaOrigem sistemaOrigem, Pageable pageable) {
-        Specification<Repasse> spec = Specification.where(null);
-
-        if (id != null) {
-            spec = spec.and(RepasseSpecifications.hasId(id));
-        }
-        if (tipoRepasse != null) {
-            spec = spec.and(RepasseSpecifications.hasTipoRepasse(tipoRepasse));
-        }
-        if (sistemaOrigem != null) {
-            spec = spec.and(RepasseSpecifications.hasSistemaOrigem(sistemaOrigem));
-        }
-
-        return repasseRepository.findAll(spec, pageable);
+    public Page<Repasse> listarRepasses(Pageable pageable) {
+        return repasseRepository.findAll(pageable);
     }
-
 
     public Repasse obterRepassePorId(Long id) {
         return repasseRepository.findById(id)

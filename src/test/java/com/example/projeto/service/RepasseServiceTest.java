@@ -2,10 +2,10 @@ package com.example.projeto.service;
 
 import com.example.projeto.dto.RepasseDTO;
 import com.example.projeto.exception.RepasseNotFoundException;
+import com.example.projeto.mappers.RepasseMapper;
 import com.example.projeto.model.Repasse;
 import com.example.projeto.model.enums.TipoRepasse;
 import com.example.projeto.repository.RepasseRepository;
-import com.example.projeto.service.RepasseService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -27,6 +27,9 @@ class RepasseServiceTest {
     @Mock
     private RepasseRepository repasseRepository;
 
+    @Mock
+    private RepasseMapper repasseMapper;
+
     @InjectMocks
     private RepasseService repasseService;
 
@@ -46,7 +49,15 @@ class RepasseServiceTest {
 
     @Test
     void salvarRepasse_sucesso() {
-        Repasse repasse = Repasse.fromDTO(repasseDTO);
+        Repasse repasse = Repasse.builder()
+                .tipoRepasse(repasseDTO.tipoRepasse())
+                .valorRepasse(repasseDTO.valorRepasse())
+                .dataVencimento(repasseDTO.dataVencimento())
+                .formaPagamento(repasseDTO.formaPagamento())
+                .sistemaOrigem(repasseDTO.sistemaOrigem())
+                .build();
+
+        when(repasseMapper.fromDTO(repasseDTO)).thenReturn(repasse);
         when(repasseRepository.save(any(Repasse.class))).thenReturn(repasse);
 
         Repasse savedRepasse = repasseService.salvarRepasse(repasseDTO);
@@ -56,7 +67,14 @@ class RepasseServiceTest {
 
     @Test
     void obterRepassePorId_sucesso() {
-        Repasse repasse = Repasse.fromDTO(repasseDTO);
+        Repasse repasse = Repasse.builder()
+                .tipoRepasse(repasseDTO.tipoRepasse())
+                .valorRepasse(repasseDTO.valorRepasse())
+                .dataVencimento(repasseDTO.dataVencimento())
+                .formaPagamento(repasseDTO.formaPagamento())
+                .sistemaOrigem(repasseDTO.sistemaOrigem())
+                .build();
+
         when(repasseRepository.findById(anyLong())).thenReturn(Optional.of(repasse));
 
         Repasse foundRepasse = repasseService.obterRepassePorId(1L);
@@ -77,7 +95,14 @@ class RepasseServiceTest {
 
     @Test
     void atualizarRepasse_sucesso() {
-        Repasse repasse = Repasse.fromDTO(repasseDTO);
+        Repasse repasse = Repasse.builder()
+                .tipoRepasse(repasseDTO.tipoRepasse())
+                .valorRepasse(repasseDTO.valorRepasse())
+                .dataVencimento(repasseDTO.dataVencimento())
+                .formaPagamento(repasseDTO.formaPagamento())
+                .sistemaOrigem(repasseDTO.sistemaOrigem())
+                .build();
+
         when(repasseRepository.findById(anyLong())).thenReturn(Optional.of(repasse));
         when(repasseRepository.save(any(Repasse.class))).thenReturn(repasse);
 
@@ -88,7 +113,6 @@ class RepasseServiceTest {
 
     @Test
     void removerRepasse_sucesso() {
-        Repasse repasse = Repasse.builder().id(1L).build();
         when(repasseRepository.existsById(1L)).thenReturn(true);
         doNothing().when(repasseRepository).deleteById(1L);
         assertDoesNotThrow(() -> repasseService.removerRepasse(1L));
