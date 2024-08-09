@@ -50,12 +50,12 @@ public class Repasse {
 
     public static Repasse fromDTO(RepasseDTO dto) {
         return new Repasse(
-                null, // id gerado automaticamente
-                dto.getTipoRepasse(),
-                dto.getValorRepasse(),
-                dto.getDataVencimento(),
-                dto.getFormaPagamento(),
-                dto.getSistemaOrigem(),
+                null, //id gerado automaticamente
+                dto.tipoRepasse(),
+                dto.valorRepasse(),
+                dto.dataVencimento(),
+                dto.formaPagamento(),
+                dto.sistemaOrigem(),
                 LocalDateTime.now(),
                 null //data de atualização será gerenciada por @PreUpdate
         );

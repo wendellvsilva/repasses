@@ -2,9 +2,14 @@ package com.example.projeto.controller;
 
 import com.example.projeto.dto.RepasseDTO;
 import com.example.projeto.model.Repasse;
+import com.example.projeto.model.enums.SistemaOrigem;
 import com.example.projeto.model.enums.TipoRepasse;
 import com.example.projeto.service.RepasseService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -26,15 +31,29 @@ public class RepasseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Repasse>> listarRepasses() {
-        List<Repasse> repasses = repasseService.listarRepasses();
+    public ResponseEntity<Page<Repasse>> listarRepasses(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDir,
+            @RequestParam(required = false) Long id,
+            @RequestParam(required = false) TipoRepasse tipoRepasse,
+            @RequestParam(required = false) SistemaOrigem sistemaOrigem) {
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(sortDir), sortBy));
+        Page<Repasse> repasses = repasseService.listarRepasses(id, tipoRepasse, sistemaOrigem, pageable);
         return ResponseEntity.ok(repasses);
     }
-
     @GetMapping("/{id}")
     public ResponseEntity<Repasse> obterRepassePorId(@PathVariable Long id) {
         Repasse repasse = repasseService.obterRepassePorId(id);
         return ResponseEntity.ok(repasse);
+    }
+
+    @GetMapping("/filtrar")
+    public ResponseEntity<List<Repasse>> filtrarRepassesPorTipo(@RequestParam TipoRepasse tipoRepasse) {
+        List<Repasse> repasses = repasseService.filtrarRepassesPorTipo(tipoRepasse);
+        return ResponseEntity.ok(repasses);
     }
 
     @PutMapping("/{id}")
@@ -49,9 +68,5 @@ public class RepasseController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/filtrar")
-    public ResponseEntity<List<Repasse>> filtrarRepassesPorTipo(@RequestParam TipoRepasse tipoRepasse) {
-        List<Repasse> repasses = repasseService.filtrarRepassesPorTipo(tipoRepasse);
-        return ResponseEntity.ok(repasses);
-    }
+
 }
