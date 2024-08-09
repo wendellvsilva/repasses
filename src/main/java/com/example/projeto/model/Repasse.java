@@ -6,6 +6,7 @@ import com.example.projeto.model.enums.SistemaOrigem;
 import com.example.projeto.model.enums.TipoRepasse;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import java.math.BigDecimal;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Repasse {
 
     @Id
@@ -49,15 +51,13 @@ public class Repasse {
     }
 
     public static Repasse fromDTO(RepasseDTO dto) {
-        return new Repasse(
-                null, //id gerado automaticamente
-                dto.tipoRepasse(),
-                dto.valorRepasse(),
-                dto.dataVencimento(),
-                dto.formaPagamento(),
-                dto.sistemaOrigem(),
-                LocalDateTime.now(),
-                null //data de atualização será gerenciada por @PreUpdate
-        );
+        return Repasse.builder()
+                .tipoRepasse(dto.tipoRepasse())
+                .valorRepasse(dto.valorRepasse())
+                .dataVencimento(dto.dataVencimento())
+                .formaPagamento(dto.formaPagamento())
+                .sistemaOrigem(dto.sistemaOrigem())
+                .dataCriacao(LocalDateTime.now())
+                .build();
     }
 }

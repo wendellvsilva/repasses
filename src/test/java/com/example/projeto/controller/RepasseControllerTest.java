@@ -58,7 +58,15 @@ class RepasseControllerTest {
 
     @Test
     void listarRepasses_sucesso() throws Exception {
-        Repasse repasse = Repasse.fromDTO(repasseDTO);
+        Repasse repasse = Repasse.builder()
+                .tipoRepasse(repasseDTO.tipoRepasse())
+                .valorRepasse(repasseDTO.valorRepasse())
+                .dataVencimento(repasseDTO.dataVencimento())
+                .formaPagamento(repasseDTO.formaPagamento())
+                .sistemaOrigem(repasseDTO.sistemaOrigem())
+                .dataCriacao(LocalDateTime.now())
+                .build();
+
         repasseRepository.save(repasse);
 
         mockMvc.perform(get("/api/repasses"))
@@ -68,7 +76,15 @@ class RepasseControllerTest {
 
     @Test
     void obterRepassePorId_sucesso() throws Exception {
-        Repasse repasse = Repasse.fromDTO(repasseDTO);
+        Repasse repasse = Repasse.builder()
+                .tipoRepasse(repasseDTO.tipoRepasse())
+                .valorRepasse(repasseDTO.valorRepasse())
+                .dataVencimento(repasseDTO.dataVencimento())
+                .formaPagamento(repasseDTO.formaPagamento())
+                .sistemaOrigem(repasseDTO.sistemaOrigem())
+                .dataCriacao(LocalDateTime.now())
+                .build();
+
         repasseRepository.save(repasse);
 
         mockMvc.perform(get("/api/repasses/{id}", repasse.getId()))
@@ -78,7 +94,15 @@ class RepasseControllerTest {
 
     @Test
     void atualizarRepasse_sucesso() throws Exception {
-        Repasse repasse = Repasse.fromDTO(repasseDTO);
+        Repasse repasse = Repasse.builder()
+                .tipoRepasse(repasseDTO.tipoRepasse())
+                .valorRepasse(repasseDTO.valorRepasse())
+                .dataVencimento(repasseDTO.dataVencimento())
+                .formaPagamento(repasseDTO.formaPagamento())
+                .sistemaOrigem(repasseDTO.sistemaOrigem())
+                .dataCriacao(LocalDateTime.now())
+                .build();
+
         repasseRepository.save(repasse);
 
         mockMvc.perform(put("/api/repasses/{id}", repasse.getId())
@@ -96,7 +120,15 @@ class RepasseControllerTest {
 
     @Test
     void removerRepasse_sucesso() throws Exception {
-        Repasse repasse = Repasse.fromDTO(repasseDTO);
+        Repasse repasse = Repasse.builder()
+                .tipoRepasse(repasseDTO.tipoRepasse())
+                .valorRepasse(repasseDTO.valorRepasse())
+                .dataVencimento(repasseDTO.dataVencimento())
+                .formaPagamento(repasseDTO.formaPagamento())
+                .sistemaOrigem(repasseDTO.sistemaOrigem())
+                .dataCriacao(LocalDateTime.now())
+                .build();
+
         repasseRepository.save(repasse);
 
         mockMvc.perform(delete("/api/repasses/{id}", repasse.getId()))
@@ -105,7 +137,15 @@ class RepasseControllerTest {
 
     @Test
     void filtrarRepassesPorTipo_sucesso() throws Exception {
-        Repasse repasse = Repasse.fromDTO(repasseDTO);
+        Repasse repasse = Repasse.builder()
+                .tipoRepasse(repasseDTO.tipoRepasse())
+                .valorRepasse(repasseDTO.valorRepasse())
+                .dataVencimento(repasseDTO.dataVencimento())
+                .formaPagamento(repasseDTO.formaPagamento())
+                .sistemaOrigem(repasseDTO.sistemaOrigem())
+                .dataCriacao(LocalDateTime.now())
+                .build();
+
         repasseRepository.save(repasse);
 
         mockMvc.perform(get("/api/repasses/filtrar")

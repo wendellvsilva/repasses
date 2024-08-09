@@ -5,6 +5,7 @@ import com.example.projeto.exception.RepasseNotFoundException;
 import com.example.projeto.model.Repasse;
 import com.example.projeto.model.enums.TipoRepasse;
 import com.example.projeto.repository.RepasseRepository;
+import com.example.projeto.service.RepasseService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -34,8 +35,13 @@ class RepasseServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        repasseDTO = new RepasseDTO(TipoRepasse.SELLER, new BigDecimal("1000.00"), LocalDateTime.now().plusDays(1),
-                TRANSFERENCIA_BANCARIA, ECOM);
+        repasseDTO = RepasseDTO.builder()
+                .tipoRepasse(TipoRepasse.SELLER)
+                .valorRepasse(BigDecimal.valueOf(1000.00))
+                .dataVencimento(LocalDateTime.now().plusDays(1))
+                .formaPagamento(TRANSFERENCIA_BANCARIA)
+                .sistemaOrigem(ECOM)
+                .build();
     }
 
     @Test
@@ -82,8 +88,7 @@ class RepasseServiceTest {
 
     @Test
     void removerRepasse_sucesso() {
-        Repasse repasse = new Repasse();
-        repasse.setId(1L);
+        Repasse repasse = Repasse.builder().id(1L).build();
         when(repasseRepository.existsById(1L)).thenReturn(true);
         doNothing().when(repasseRepository).deleteById(1L);
         assertDoesNotThrow(() -> repasseService.removerRepasse(1L));
