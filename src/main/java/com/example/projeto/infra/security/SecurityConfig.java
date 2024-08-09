@@ -23,13 +23,13 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/h2-console/**").hasRole("ADMIN") // Protege o H2 Console
+                        .requestMatchers("/h2-console/**").hasRole("ADMIN")
                         .anyRequest().permitAll()
                 )
                 .formLogin(withDefaults())
                 .httpBasic(withDefaults())
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/h2-console/**") // Ignora CSRF para H2 Console
+                        .ignoringRequestMatchers("/h2-console/**")
                 )
                 .headers(headers -> headers
                         .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
