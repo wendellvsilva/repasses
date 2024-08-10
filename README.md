@@ -119,3 +119,11 @@ Acesso ao dashboard e ferramentas pelo admin
 Acesso ao perfil e dados do usuário
 - URL: `http://localhost:8080/api/user/perfil`
 - URL: `http://localhost:8080/api/user/dados`
+
+### Como rodar o JaCoCo
+Para rodar o JaCoCo e ver a cobertura de testes da aplicação, você deve executar os seguintes<br>comandos no terminal:
+```sh
+mvn clean test
+mvn jacoco:report
+```
+- Abra o arquivo `index.html` localizado na pasta  target/site/jacoco do seu projeto<br> com um navegador para visualizar o relatório de cobertura.
