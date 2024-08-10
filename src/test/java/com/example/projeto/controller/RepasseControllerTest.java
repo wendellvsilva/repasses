@@ -5,6 +5,7 @@ import com.example.projeto.model.Repasse;
 import com.example.projeto.model.enums.TipoRepasse;
 import com.example.projeto.repository.RepasseRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -41,6 +42,7 @@ class RepasseControllerTest {
     }
 
     @Test
+    @DisplayName("Criar repasse com sucesso")
     void criarRepasse_sucesso() throws Exception {
         mockMvc.perform(post("/api/repasses")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -57,6 +59,7 @@ class RepasseControllerTest {
     }
 
     @Test
+    @DisplayName("Listar repasses com sucesso")
     void listarRepasses_sucesso() throws Exception {
         Repasse repasse = Repasse.builder()
                 .tipoRepasse(repasseDTO.tipoRepasse())
@@ -75,6 +78,7 @@ class RepasseControllerTest {
     }
 
     @Test
+    @DisplayName("Obter repasse por ID com sucesso")
     void obterRepassePorId_sucesso() throws Exception {
         Repasse repasse = Repasse.builder()
                 .tipoRepasse(repasseDTO.tipoRepasse())
@@ -93,6 +97,7 @@ class RepasseControllerTest {
     }
 
     @Test
+    @DisplayName("Atualizar repasse com sucesso")
     void atualizarRepasse_sucesso() throws Exception {
         Repasse repasse = Repasse.builder()
                 .tipoRepasse(repasseDTO.tipoRepasse())
@@ -119,6 +124,7 @@ class RepasseControllerTest {
     }
 
     @Test
+    @DisplayName("Remover repasse com sucesso")
     void removerRepasse_sucesso() throws Exception {
         Repasse repasse = Repasse.builder()
                 .tipoRepasse(repasseDTO.tipoRepasse())
@@ -136,6 +142,7 @@ class RepasseControllerTest {
     }
 
     @Test
+    @DisplayName("Filtrar repasses por tipo com sucesso")
     void filtrarRepassesPorTipo_sucesso() throws Exception {
         Repasse repasse = Repasse.builder()
                 .tipoRepasse(repasseDTO.tipoRepasse())
