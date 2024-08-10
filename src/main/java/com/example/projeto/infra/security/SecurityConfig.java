@@ -44,13 +44,13 @@ public class SecurityConfig {
         String senhaAdmin = dotenv.get("ADMIN_PASSWORD");//as senhas podem ser encontradas no arquivo .env
 
         UserDetails user = User.withDefaultPasswordEncoder()
-                .username("usuario")
+                .username("magalu")
                 .password(senhaUsuario)
                 .roles("USER")
                 .build();
 
         UserDetails admin = User.withDefaultPasswordEncoder()
-                .username("wendell")
+                .username("fera")
                 .password(senhaAdmin)
                 .roles("ADMIN")
                 .build();

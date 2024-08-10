@@ -29,7 +29,7 @@ mvn spring-boot:run
 ## Acessar o Console H2
 Para visualizar o banco de dados H2:
 - Abra um navegador e acesse a URL:` http://localhost:8080/h2-console `
-- Insira o username: `wendell`
+- Insira o username: `fera`
 - Insira a senha: `fera`
 - **Configure os parâmetros de conexão:**
 - JDBC URL: jdbc:h2:mem:testdb
@@ -57,3 +57,65 @@ A configuração exata pode ser encontrada na classe `SecurityConfig` em <br>
 `src/main/java/com/example/projeto/config/SecurityConfig.java`.
 
 }
+
+### Método POST
+Cadastrar um repasse
+- URL: `http://localhost:8080/api/repasses`
+Exemplo Json:
+```sh
+{
+  "tipoRepasse": "SELLER",
+  "valorRepasse": 1240.00,
+  "dataVencimento": "2024-09-01T00:00",
+  "formaPagamento": "TRANSFERENCIA_BANCARIA",
+  "sistemaOrigem": "ECOM"
+}
+```
+
+### Método GET
+Listar repasses com paginação<br>
+Exemplos de URL
+- URL: `http://localhost:8080/api/repasses`
+- URL: `http://localhost:8080/api/repasses?page=0&size=10&sortBy=id&sortDir=asc` (Página 0, tamanho 10, ordenado por id em ordem crescente)
+- URL: `http://localhost:8080/api/repasses?page=1&size=20&sortBy=nome&sortDir=desc` (Página 1, tamanho 20, ordenado por nome em ordem decrescente)
+
+### Método GET
+Listar pelo ID
+- URL:`http://localhost:8080/api/repasses/1`
+### Método GET
+Listar repasses com filtragem
+Exemplos de URL
+- URL:  `http://localhost:8080/api/repasses/filtrar?tipoRepasse=SELLER`
+- URL:  `http://localhost:8080/api/repasses/filtrar?tipoRepasse=CONTABIL`
+### Método PUT
+Atualizar repasses(Precisamos do ID como parâmetro)
+- URL: `http://localhost:8080/api/repasses/1`
+Exemplo JSON:
+```sh
+{
+  "tipoRepasse": "CONCILIACAO",
+  "valorRepasse": 1400.00,
+  "dataVencimento": "2024-10-01T00:00:00.000Z",
+  "formaPagamento": "BOLETO",
+  "sistemaOrigem": "LOGISTICA"
+}
+```
+
+### Método DELETE
+Deletar um repasse(ID como parâmetro)
+- URL: `http://localhost:8080/api/repasses/1`
+
+### Rotas autenticadas
+Criei algumas rotas autenticadas pra validar meu conhecimento no security
+<br> 
+- Para acessar as rotas de admin, você deve por o usuário `fera` com a senha `fera`
+- Para acessar as rotas de usuario, você deve por o usuário `magalu` com a senha `magalu`
+### Método GET(Admin)
+Acesso ao dashboard e ferramentas pelo admin
+- URL:`http://localhost:8080/api/admin/dashboard`
+- URL: `http://localhost:8080/api/admin/ferramentas`
+
+### Método GET(Usuário)
+Acesso ao perfil e dados do usuário
+- URL: `http://localhost:8080/api/user/perfil`
+- URL: `http://localhost:8080/api/user/dados`
